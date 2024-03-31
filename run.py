@@ -1,4 +1,5 @@
 import gspread
+from pprint import pprint
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -78,6 +79,26 @@ def calculate_surplus_data():
     return new_data
 
 
+def get_new_stock_data():
+    '''
+    Calculate new stock data based on 5 latest day of sales (+10%)
+    '''
+    latest_sales = (SHEET.worksheet('sales').get_all_values())
+    latest_sales = latest_sales[-5:len(latest_sales)]
+
+    new_data = []
+    mean = 0
+
+    for x in range(6):
+        for y in range(len(latest_sales)):
+            mean += int(latest_sales[y][x])
+        mean = mean / 6
+        mean += mean / 10
+        new_data.append(round(mean))
+
+    return new_data
+
+
 def main():
     """
     Run all program functions
@@ -87,6 +108,12 @@ def main():
     update_worksheet('sales', sales_data)
     new_surplus_data = calculate_surplus_data()
     update_worksheet('surplus', new_surplus_data)
+    new_stock = get_new_stock_data()
+    update_worksheet('stock', new_stock)
+
 
 print('\nWelcome! Have a sandwich 🥪\n')
 main()
+
+
+    
