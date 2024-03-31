@@ -50,15 +50,15 @@ def validate_data(values):
     return True
 
 
-def update_sales_worksheet(data):
+def update_worksheet(worksheet, data):
     """
-    Update sales worksheet
+    Update specific worksheet
     """
-    print('Updating sales worksheet...\n')
-    sales_worksheet = SHEET.worksheet('sales')
-    sales_worksheet.append_row(data)
-    print('Sales Worksheet updated... \n')
-
+    print(f'Updating {worksheet} worksheet...')
+    s_worksheet = SHEET.worksheet(worksheet)
+    print(f'Data being inserted: "{data}"')
+    s_worksheet.append_row(data)
+    print(f'{worksheet.capitalize()} Worksheet updated... \n')
 
 def calculate_surplus_data():
     '''
@@ -78,26 +78,15 @@ def calculate_surplus_data():
     return new_data
 
 
-def update_surplus_data(data):
-    '''
-    Add newly calculated surplus data to surplus worksheet
-    '''
-    print('Updating Spreadsheet with newly calculated data...')
-    print('Data being inserted: ' + str(data))
-    surplus_worksheet = SHEET.worksheet('surplus')
-    surplus_worksheet.append_row(data)
-    print('Worksheet Updated Successfully')
-
-
 def main():
     """
     Run all program functions
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet('sales', sales_data)
     new_surplus_data = calculate_surplus_data()
-    update_surplus_data(new_surplus_data)
+    update_worksheet('surplus', new_surplus_data)
 
 print('\nWelcome! Have a sandwich 🥪\n')
 main()
