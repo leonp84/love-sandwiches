@@ -12,6 +12,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
+
 def get_sales_data():
     """
     Get sales data from user
@@ -30,6 +31,7 @@ def get_sales_data():
     
     return sales_data
 
+
 def validate_data(values):
     """
     Validate Data by checking 6 values and all integers
@@ -45,4 +47,16 @@ def validate_data(values):
 
     return True
 
+
+def update_sales_worksheet(data):
+    """
+    Update sales worksheet
+    """
+    print('Updating sales worksheet...\n')
+    sales_worksheet = SHEET.worksheet('sales')
+    sales_worksheet.append_row(data)
+    print('Sales Worksheet updated... \n')
+
 data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
