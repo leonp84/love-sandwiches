@@ -18,9 +18,11 @@ def get_sales_data():
     Get sales data from user
     """
     while True:
+        print('===============================================')
         print('Please enter sales data from previous sales day')
         print('6 x Numbers, each seperates with commas... see below')
-        print('"10,20,60,100,90"\n')
+        print('"10,20,60,100,90"')
+        print('===============================================')
 
         data_str = input('Enter your data here: ')
         sales_data = data_str.split(',')
@@ -57,6 +59,34 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print('Sales Worksheet updated... \n')
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+
+def calculate_surplus_data():
+    '''
+    Let's calculate the suplus!
+    '''
+    print('Calculating Surplus...\n')
+    stock = SHEET.worksheet('stock').get_all_values()
+    sales = SHEET.worksheet('sales').get_all_values()
+    surplus_worksheet = SHEET.worksheet('surplus')
+    new_data = []
+
+    x = len(stock)-1
+
+    for i in range(6):
+        new_data.append(int(stock[x][i]) - int(sales[x][i]))
+    
+    return new_data
+    
+
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    new_surplus_data = calculate_surplus_data()
+    print(new_surplus_data)
+
+print('\nWelcome! Have a sandwich 🥪\n')
+main()
