@@ -67,7 +67,7 @@ def calculate_surplus_data():
     print('Calculating Surplus...\n')
     stock = SHEET.worksheet('stock').get_all_values()
     sales = SHEET.worksheet('sales').get_all_values()
-    surplus_worksheet = SHEET.worksheet('surplus')
+
     new_data = []
 
     x = len(stock)-1
@@ -76,7 +76,18 @@ def calculate_surplus_data():
         new_data.append(int(stock[x][i]) - int(sales[x][i]))
     
     return new_data
-    
+
+
+def update_surplus_data(data):
+    '''
+    Add newly calculated surplus data to surplus worksheet
+    '''
+    print('Updating Spreadsheet with newly calculated data...')
+    print('Data being inserted: ' + str(data))
+    surplus_worksheet = SHEET.worksheet('surplus')
+    surplus_worksheet.append_row(data)
+    print('Worksheet Updated Successfully')
+
 
 def main():
     """
@@ -86,7 +97,7 @@ def main():
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
     new_surplus_data = calculate_surplus_data()
-    print(new_surplus_data)
+    update_surplus_data(new_surplus_data)
 
 print('\nWelcome! Have a sandwich 🥪\n')
 main()
