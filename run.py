@@ -16,29 +16,33 @@ def get_sales_data():
     """
     Get sales data from user
     """
-    print('Please enter sales data from previous sales day')
-    print('6 x Numbers, each seperates with commas... see below')
-    print('"10,20,60,100,90"\n')
+    while True:
+        print('Please enter sales data from previous sales day')
+        print('6 x Numbers, each seperates with commas... see below')
+        print('"10,20,60,100,90"\n')
 
-    data_str = input('Enter your data here:')
-    sales_data = data_str.split(',')
+        data_str = input('Enter your data here: ')
+        sales_data = data_str.split(',')
 
-    validate_data(sales_data)
-    print(f"You entered: {sales_data}")
+        if validate_data(sales_data):
+            print('Data is valid!')
+            break
+    
+    return sales_data
 
 def validate_data(values):
     """
     Validate Data by checking 6 values and all integers
     """
-    print(values)
     if len(values) != 6:
-        print(len(values))
-        print(f"Wrong length of {len(values)}! Quitting now")
-        raise ValueError
+        print(f"Wrong length of {len(values)}! Repeat!\n")
+        return False
 
-    for i in sales_data:
+    for i in values:
         if not i.isdigit():
-            print('Wrong Values! Not right! Quitting now... gonna have to repeat!')
-            raise ValueError
+            print('Wrong Values! Not right! gonna have to repeat!\n')
+            return False
 
-get_sales_data()
+    return True
+
+data = get_sales_data()
