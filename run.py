@@ -21,6 +21,26 @@ def get_sales_data():
     print('"10,20,60,100,90"\n')
 
     data_str = input('Enter your data here:')
-    print(f"You entered: {data_str}")
+    sales_data = data_str.split(',')
+
+
+
+    validate_data(sales_data)
+    print(f"You entered: {sales_data}")
+
+def validate_data(values):
+    """
+    Validate Data by checking 6 values and all integers
+    """
+    print(values)
+        if len(sales_data) != 6:
+        print(len(sales_data))
+        print('Wrong length! Quitting now')
+        sales_data = []
+
+    for i in sales_data:
+        if not i.isdigit():
+            print('Wrong Values! Not right! Quitting now... gonna have to repeat!')
+            sales_data = []
 
 get_sales_data()
