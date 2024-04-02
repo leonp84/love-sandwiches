@@ -1,5 +1,4 @@
 import gspread
-from pprint import pprint
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -25,7 +24,7 @@ def get_sales_data():
         print('"10,20,60,100,90"')
         print('===============================================')
 
-        data_str = input('Enter your data here: ')
+        data_str = input('Enter your data here:\n')
         sales_data = data_str.split(',')
 
         if validate_data(sales_data):
